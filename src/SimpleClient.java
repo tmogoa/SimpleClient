@@ -37,12 +37,6 @@ public class SimpleClient {
         Reader reader = new Reader(sc);
         reader.start();
         sc.startWriter();
-
-//        System.out.println(sc.read());
-//        sc.write("Hi too!");
-//        System.out.println(sc.read());
-//        sc.write("The quick brown fox jumped over the lazy sleeping dog");
-//        System.out.println(sc.read());
     }
 
     // Send a string!
@@ -51,6 +45,7 @@ public class SimpleClient {
             dos.writeUTF(data);
 
         } catch (IOException e) {
+            close();
             throw new RuntimeException(e);
         }
     }
@@ -61,6 +56,7 @@ public class SimpleClient {
 
             return st;
         } catch (IOException e) {
+            close();
             throw new RuntimeException(e);
         }
     }
@@ -69,8 +65,15 @@ public class SimpleClient {
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNext()){
             String line = scanner.nextLine();
+
+            if(line.equals("quit") || line.equals("q")){
+                close();
+                System.exit(0);
+            }
+
             write(line);
         }
+        close();
     }
 
     public void close(){
@@ -83,44 +86,8 @@ public class SimpleClient {
         }
     }
 
-    public Socket getSock() {
-        return sock;
-    }
 
-    public void setSock(Socket sock) {
-        this.sock = sock;
-    }
-
-    public OutputStream getOs() {
-        return os;
-    }
-
-    public void setOs(OutputStream os) {
-        this.os = os;
-    }
-
-    public DataOutputStream getDos() {
-        return dos;
-    }
-
-    public void setDos(DataOutputStream dos) {
-        this.dos = dos;
-    }
-
-    public InputStream getIs() {
-        return is;
-    }
-
-    public void setIs(InputStream is) {
-        this.is = is;
-    }
-
-    public DataInputStream getDis() {
+    public DataInputStream getDataOutputStream() {
         return dis;
     }
-
-    public void setDis(DataInputStream dis) {
-        this.dis = dis;
-    }
-
 }

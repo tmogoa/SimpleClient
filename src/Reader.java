@@ -14,7 +14,7 @@ public class Reader extends Thread{
             try {
                 // reduce number of checks
                 sleep(100);
-                if (sc.getDis().available() > 0){
+                if (sc.getDataOutputStream().available() > 0){
                     System.out.println(sc.read());
                 };
             } catch (IOException | InterruptedException e) {
